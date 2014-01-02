@@ -11,6 +11,8 @@ GameObject:
   - 212: {fileID: 21200000}
   - 50: {fileID: 5000000}
   - 60: {fileID: 6000000}
+  - 114: {fileID: 11400000}
+  - 114: {fileID: 11400002}
   m_Layer: 0
   m_Name: Enemy1
   m_TagString: Untagged
@@ -55,14 +57,38 @@ PolygonCollider2D:
   m_IsTrigger: 0
   m_Poly:
     m_Paths:
-    - - {x: -.226184472, y: -.079137139}
+    - - {x: -.223683372, y: -.0331166387}
       - {x: -.22574535, y: -.154208079}
       - {x: .258112907, y: -.154297084}
       - {x: .258047581, y: .0165187847}
       - {x: .215466127, y: .0927869827}
       - {x: .120107792, y: .151225567}
       - {x: -.00665917387, y: .150596485}
-      - {x: -.126133546, y: -.022996759}
+      - {x: -.122631989, y: -.0325009823}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ce9e6b56ea68924094ac34a9436d0a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
+--- !u!114 &11400002
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 028d1497eb6026a41bdf43bb1c03005a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseHealthPoints: 1
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1

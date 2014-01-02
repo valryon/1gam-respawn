@@ -21,6 +21,7 @@ public class PlayerScript : MonoBehaviour
   private float continousJumpRemaingTime;
   private bool isGrounded;
   private Transform groundCheckerLeft, groundCheckerRight;
+  private Vector2 startPosition;
 
   void Awake()
   {
@@ -35,6 +36,10 @@ public class PlayerScript : MonoBehaviour
     {
       Debug.LogError("Missing FloorCheckRight object");
     }
+
+    startPosition = transform.position;
+    HealthScript health = GetComponent<HealthScript>();
+    health.OnDeath += DieAndRespawn;
   }
 
   #region Horizontal
@@ -218,6 +223,21 @@ public class PlayerScript : MonoBehaviour
 
     transform.localScale = currentScale;
   }
+
+  void DieAndRespawn()
+  {
+    // RESPAWN
+
+    // Change location
+    this.transform.position = startPosition;
+
+    // Change stats
+    this.transform.localScale += new Vector3(0.1f, 0.1f, 0);
+
+    // Camera is a bit larger
+    Camera.main.orthographicSize += 0.1f;
+  }
+
 
   #region Properties
 
