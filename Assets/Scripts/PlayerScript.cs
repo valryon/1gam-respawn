@@ -226,16 +226,23 @@ public class PlayerScript : MonoBehaviour
 
   void DieAndRespawn()
   {
-    // RESPAWN
+    // DIE
 
-    // Change location
-    this.transform.position = startPosition;
+
+    // UPGRADE
 
     // Change stats
     this.transform.localScale += new Vector3(0.1f, 0.1f, 0);
 
     // Camera is a bit larger
     Camera.main.orthographicSize += 0.1f;
+
+    // RESPAWN
+
+    // Change location
+    this.transform.position = startPosition;
+
+    // Reset health
   }
 
 

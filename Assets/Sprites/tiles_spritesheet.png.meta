@@ -72,7 +72,7 @@ TextureImporter:
         height: 36
       alignment: 0
       pivot: {x: .5, y: .5}
-    - name: tiles_spritesheet_3
+    - name: fireball
       rect:
         serializedVersion: 2
         x: 378
@@ -387,7 +387,7 @@ TextureImporter:
         height: 41
       alignment: 0
       pivot: {x: .5, y: .5}
-    - name: tiles_spritesheet_38
+    - name: star
       rect:
         serializedVersion: 2
         x: 160
