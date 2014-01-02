@@ -31,7 +31,7 @@ public class WeaponScript : MonoBehaviour
   /// <summary>
   /// Create a new projectile if possible
   /// </summary>
-  public void Attack()
+  public Transform Attack()
   {
     if (CanAttack)
     {
@@ -46,7 +46,10 @@ public class WeaponScript : MonoBehaviour
       MoveScript projectileMove = projectileTransform.GetComponent<MoveScript>();
       projectileMove.direction = this.transform.right; // towards in 2D space is the right of the sprite
 
+      return projectileTransform;
     }
+
+    return null;
   }
 
   /// <summary>

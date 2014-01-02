@@ -13,6 +13,8 @@ public class PlayerScript : MonoBehaviour
   public float continuousJumpAcceleration = 7f;
   public float continuousJumpDuration = 0.5f; // seconds
 
+  public int Level = 1;
+
   /// <summary>
   /// Sprite flip
   /// </summary>
@@ -22,6 +24,9 @@ public class PlayerScript : MonoBehaviour
   private bool isGrounded;
   private Transform groundCheckerLeft, groundCheckerRight;
   private Vector2 startPosition;
+
+  private WeaponScript[] weapons;
+  private HealthScript health;
 
   void Awake()
   {
@@ -38,8 +43,11 @@ public class PlayerScript : MonoBehaviour
     }
 
     startPosition = transform.position;
-    HealthScript health = GetComponent<HealthScript>();
+
+    health = GetComponent<HealthScript>();
     health.OnDeath += DieAndRespawn;
+
+    weapons = GetComponentsInChildren<WeaponScript>();
   }
 
   #region Horizontal
@@ -131,6 +139,21 @@ public class PlayerScript : MonoBehaviour
     isGrounded = false;
     TestGroundForChecker(groundCheckerLeft);
     TestGroundForChecker(groundCheckerRight);
+
+    // Attack
+    //---------------------------------------------
+    if (Input.GetButtonDown("Fire1"))
+    {
+      foreach (var wpn in weapons)
+      {
+        if (wpn.CanAttack)
+        {
+          var projectile = wpn.Attack();
+
+          SetProjectileToLevel(projectile);
+        }
+      }
+    }
 
     // Movement
     //---------------------------------------------
@@ -224,12 +247,17 @@ public class PlayerScript : MonoBehaviour
     transform.localScale = currentScale;
   }
 
+  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  // Magic Numberz party below
+  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
   void DieAndRespawn()
   {
     // DIE
 
 
     // UPGRADE
+    Level++;
 
     // Change stats
     this.transform.localScale += new Vector3(0.1f, 0.1f, 0);
@@ -245,6 +273,18 @@ public class PlayerScript : MonoBehaviour
     // Reset health
   }
 
+  private void SetProjectileToLevel(Transform projectile)
+  {
+
+    // Apply level on projectile
+    projectile.transform.localScale = projectile.transform.localScale * (Level * 0.25f);
+
+    MoveScript projectileMove = projectile.GetComponent<MoveScript>();
+    projectileMove.speed *= (Level * 0.15f);
+
+    DamageScript damage = projectile.GetComponent<DamageScript>();
+    damage.damage = (int)Mathf.Ceil(Level * 0.15f);
+  }
 
   #region Properties
 
