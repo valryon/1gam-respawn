@@ -14,7 +14,34 @@ public class HealthScript : MonoBehaviour
 
   void Start()
   {
+    Reset();
+  }
+
+  public void Reset()
+  {
     currentHP = baseHealthPoints;
+  }
+
+  void OnDrawGizmos()
+  {
+    // health bar
+
+    float purcent = ((float)currentHP / (float)baseHealthPoints);
+
+    if (purcent > 0.7f)
+    {
+      Gizmos.color = Color.green;
+    }
+    else if (purcent > 0.35f)
+    {
+      Gizmos.color = Color.Lerp(Color.red, Color.yellow, 0.5f);
+    }
+    else
+    {
+      Gizmos.color = Color.red;
+    }
+
+    Gizmos.DrawCube(transform.position, new Vector3((1 * purcent), 0.25f, 1));
   }
 
   /// <summary>

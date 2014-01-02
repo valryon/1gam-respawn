@@ -89,7 +89,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 028d1497eb6026a41bdf43bb1c03005a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseHealthPoints: 10
+  baseHealthPoints: 25
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1

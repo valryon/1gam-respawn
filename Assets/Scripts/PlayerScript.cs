@@ -271,6 +271,7 @@ public class PlayerScript : MonoBehaviour
     this.transform.position = startPosition;
 
     // Reset health
+    health.Reset();
   }
 
   private void SetProjectileToLevel(Transform projectile)
@@ -283,7 +284,7 @@ public class PlayerScript : MonoBehaviour
     projectileMove.speed *= (Level * 0.15f);
 
     DamageScript damage = projectile.GetComponent<DamageScript>();
-    damage.damage = (int)Mathf.Ceil(Level * 0.15f);
+    damage.damage = (int)Mathf.Floor(Level * 0.15f);
   }
 
   #region Properties
