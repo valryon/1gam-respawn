@@ -97,6 +97,7 @@ MonoBehaviour:
   controlForce: {x: 400, y: 1000}
   reboundForce: 1800
   slowmotionTotalTimeInSeconds: 5
+  slowmotionBonusPerKill: 1
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1
