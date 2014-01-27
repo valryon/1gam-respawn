@@ -165,7 +165,7 @@ public class CoconutScript : MonoBehaviour
     if (hasReboundThisFrame == false)
     {
       hasReboundThisFrame = true;
-      force = baseForce + ((baseForce * (gameScript.ComboCount - 1)) / 10f); // Bonus for each combo
+      force = baseForce + ((baseForce * (gameScript.ComboCount - 1)) / 15f); // Bonus for each combo
     }
     else
     {
@@ -173,6 +173,11 @@ public class CoconutScript : MonoBehaviour
     }
     rigidbody2D.velocity = Vector2.zero;
     rigidbody2D.AddForce(force);
+
+    // JUICE
+    // Force should be very small (0.5f = waow). Duration is in seconds
+    int powerLevel = (gameScript.ComboCount / 8) + 1 ;
+    SpecialEffects.Instance.ShakeCamera(powerLevel / 16f, 0.1f);
   }
 
   /// <summary>
