@@ -11,6 +11,21 @@ public class GameGUI : MonoBehaviour
   public GUIText comboText;
 
   private float slowmoPurcent = 1f;
+  private bool isVisible = false;
+
+  void Start()
+  {
+    SetVisible(false);
+  }
+
+  public void SetVisible(bool isVisible)
+  {
+    this.isVisible = isVisible;
+
+    timeText.enabled = isVisible;
+    scoreText.enabled = isVisible;
+    comboText.enabled = isVisible;
+  }
 
   public void UpdateGUI(float time, int score, int combo)
   {
@@ -26,8 +41,11 @@ public class GameGUI : MonoBehaviour
 
   void OnGUI()
   {
-    GUI.color = Color.green;
-    GUI.HorizontalScrollbar(new Rect(40, 30, 200, 20), 1, slowmoPurcent * 100, 10, 110);
+    if (isVisible)
+    {
+      GUI.color = Color.green;
+      GUI.HorizontalScrollbar(new Rect(40, 30, 200, 20), 1, slowmoPurcent * 100, 10, 110);
+    }
   }
 
 }

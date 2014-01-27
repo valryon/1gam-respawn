@@ -846,6 +846,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 503419697}
+  - 114: {fileID: 503419698}
   m_Layer: 0
   m_Name: GUI
   m_TagString: Untagged
@@ -868,6 +869,20 @@ Transform:
   - {fileID: 1047514898}
   - {fileID: 33306268}
   m_Father: {fileID: 0}
+--- !u!114 &503419698
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 503419696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 881b62a82f357d94b8d89abff2deb4e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeText: {fileID: 1047514897}
+  scoreText: {fileID: 1447171818}
+  comboText: {fileID: 33306267}
 --- !u!1 &644501154
 GameObject:
   m_ObjectHideFlags: 0
@@ -1461,9 +1476,8 @@ GameObject:
   m_Component:
   - 4: {fileID: 1070115101}
   - 114: {fileID: 1070115100}
-  - 114: {fileID: 1070115102}
   m_Layer: 0
-  m_Name: Scripts
+  m_Name: Game Script
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1503,20 +1517,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
---- !u!114 &1070115102
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1070115099}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 881b62a82f357d94b8d89abff2deb4e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timeText: {fileID: 1047514897}
-  scoreText: {fileID: 1447171818}
-  comboText: {fileID: 33306267}
 --- !u!1 &1107444145
 GameObject:
   m_ObjectHideFlags: 0

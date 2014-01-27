@@ -92,7 +92,7 @@ public class CoconutScript : MonoBehaviour
       }
 
       slowmotionRemainingTime = Mathf.Clamp(slowmotionRemainingTime, 0f, slowmotionTotalTimeInSeconds);
-      gameScript.GUI.UpdateSlowmotion(slowmotionRemainingTime / slowmotionTotalTimeInSeconds);
+      gameScript.GameGUI.UpdateSlowmotion(slowmotionRemainingTime / slowmotionTotalTimeInSeconds);
 
       // ARROWS to move slightly
       if (Input.GetKeyDown(KeyCode.LeftArrow))

@@ -68,6 +68,7 @@ public class GameScript : MonoBehaviour
   /// </summary>
   public float maxSpawnCooldownInSeconds = 1.25f;
 
+  private bool isEnded;
 
   private float timeleft;
   private int score;
@@ -79,6 +80,8 @@ public class GameScript : MonoBehaviour
 
   void Start()
   {
+    isEnded = false;
+
     // Check parameters
     if (randomGuySpawns == null || randomGuySpawns.Length == 0) Debug.LogError("Missing randomGuySpawns!");
     if (randomGuyPrefab == null) Debug.LogError("Missing RandomGuy prefab!");
@@ -100,29 +103,54 @@ public class GameScript : MonoBehaviour
 
     // Instantiate coconut
     SpawnCoconut();
+
+    gui.SetVisible(true);
   }
 
   void Update()
   {
-    // Not a coroutine so we can modify the min/max and use a random more simply
-    enemySpawnCooldown -= Time.deltaTime;
-    if (enemySpawnCooldown <= 0f)
+    //------------------------------------
+    // Ingame
+    //------------------------------------
+    if (isEnded == false)
     {
-      enemySpawnCooldown = Random.Range(minSpawnCooldownInSeconds, maxSpawnCooldownInSeconds);
-      SpawnGuy();
+      // Not a coroutine so we can modify the min/max and use a random more simply
+      enemySpawnCooldown -= Time.deltaTime;
+      if (enemySpawnCooldown <= 0f)
+      {
+        enemySpawnCooldown = Random.Range(minSpawnCooldownInSeconds, maxSpawnCooldownInSeconds);
+        SpawnGuy();
+      }
+
+      // Reset combo is cooldown drops to 0
+      if (comboCooldown > 0)
+      {
+        comboCooldown -= Time.deltaTime;
+        if (comboCooldown <= 0f)
+          combo = 1;
+      }
+
+      timeleft -= Time.deltaTime;
+
+      gui.UpdateGUI(timeleft, score, combo);
+
+      // Time is over?
+      if (timeleft < 0)
+      {
+        isEnded = true;
+        gui.SetVisible(false);
+      }
+    }
+    //------------------------------------
+    // End
+    //------------------------------------
+    else
+    {
+      // Display score, whatever
+      // DEBUG: RELOAD
+      Application.LoadLevel("Game");
     }
 
-    // Reset combo is cooldown drops to 0
-    if (comboCooldown > 0)
-    {
-      comboCooldown -= Time.deltaTime;
-      if (comboCooldown <= 0f)
-        combo = 1;
-    }
-
-    timeleft -= Time.deltaTime;
-
-    gui.UpdateGUI(timeleft, score, combo);
   }
 
   /// <summary>
@@ -193,7 +221,7 @@ public class GameScript : MonoBehaviour
     }
   }
 
-  public GameGUI GUI
+  public GameGUI GameGUI
   {
     get
     {
