@@ -94,7 +94,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 814aad166c408394c93b21bf75e6d775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controlForce: {x: 0, y: 0}
+  controlForce: 100
+  reboundForce: 400
+  reboundVelocityPurcent: .100000001
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -1107,6 +1107,7 @@ MonoBehaviour:
   coconutPrefab: {fileID: 400000, guid: 1debcbec8addb4bae92e652a5f045b3e, type: 2}
   minSpawnCooldownInSeconds: .449999988
   maxSpawnCooldownInSeconds: 1.25
+  respawnTimeInSeconds: 1.5
 --- !u!4 &1070115101
 Transform:
   m_ObjectHideFlags: 0
@@ -1701,7 +1702,7 @@ GameObject:
   - 81: {fileID: 1843503491}
   m_Layer: 0
   m_Name: Camera
-  m_TagString: Untagged
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
