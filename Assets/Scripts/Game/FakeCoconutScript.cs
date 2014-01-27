@@ -17,29 +17,29 @@ public class FakeCoconutScript : MonoBehaviour {
 
   private static Dictionary<MessageType, string[]> messages = new Dictionary<MessageType, string[]>() {
     { MessageType.Bonus, new string[]{
-        "Bonus1",
-        "Bonus2",
-        "Bonus3"
+        "Yeepee,a super bonus!",
+        "What did you just take?",
+        "Double coconut!"
       }},
     { MessageType.Fail, new string[]{
-        "Fail1",
-        "Fail2",
-        "Fail3"
+        "Haha, fail!",
+        "Loser!",
+        "What a shame"
       }},
     { MessageType.Kill, new string[]{
-        "Kill1",
-        "Kill2",
-        "Kill3"
+        "Bang!",
+        "Nice!",
+        "Take that!"
       }},
     { MessageType.Power, new string[]{
-        "Power1",
-        "Power2",
-        "Power3"
+        "Nice combo!",
+        "Wow, coooooombo",
+        "Growing combo!"
       }},
     { MessageType.Start, new string[]{
-        "Start1",
-        "Start2",
-        "Start3"
+        "SPACEBAR to start!",
+        "Hit SPACEBAR to start killing!",
+        "SPACEBAR is magic!"
       }}
 
   };
