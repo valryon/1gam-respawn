@@ -8,13 +8,20 @@ public class SpecialEffects : MonoBehaviour
 {
   public static SpecialEffects Instance;
 
+  public ParticleSystem killEffect;
+  public ParticleSystem groundEffect;
+
   private Vector3 originPosition;
   private float shakeDecay;
   private float shakeIntensity;
 
+  private Transform specialEffectParent;
+
   void Awake()
   {
     Instance = this;
+
+    specialEffectParent = new GameObject("Special effects").transform;
   }
 
   void Update()
@@ -24,6 +31,23 @@ public class SpecialEffects : MonoBehaviour
       Camera.main.transform.position = originPosition + Random.insideUnitSphere * shakeIntensity;
       shakeIntensity -= shakeDecay;
     }
+  }
+
+
+  public void KillEffect(Vector3 position)
+  {
+    ParticleSystem ps = Instantiate(killEffect) as ParticleSystem;
+    ps.transform.position = position;
+    ps.transform.parent = specialEffectParent;
+    Destroy(ps.gameObject, ps.duration);
+  }
+
+  public void GroundEffect(Vector3 position)
+  {
+    ParticleSystem ps = Instantiate(groundEffect) as ParticleSystem;
+    ps.transform.position = position;
+    ps.transform.parent = specialEffectParent;
+    Destroy(ps.gameObject, ps.duration);
   }
 
 

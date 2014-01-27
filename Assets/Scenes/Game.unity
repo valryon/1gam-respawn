@@ -1379,6 +1379,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1070115101}
   - 114: {fileID: 1070115100}
+  - 114: {fileID: 1070115102}
   m_Layer: 0
   m_Name: Game Script
   m_TagString: Untagged
@@ -1412,8 +1413,8 @@ MonoBehaviour:
   minSpawnCooldownInSeconds: .449999988
   maxSpawnCooldownInSeconds: 1.25
   bonusPrefab: {fileID: 11400000, guid: 5abdbe4725939754ba9b719226598d9e, type: 2}
-  minBonusSpawnFrequency: 2.5
-  maxBonusSpawnFrequency: 5
+  minBonusSpawnFrequency: 5
+  maxBonusSpawnFrequency: 10
 --- !u!4 &1070115101
 Transform:
   m_ObjectHideFlags: 0
@@ -1425,6 +1426,19 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
+--- !u!114 &1070115102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1070115099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e22646e009bf27d4eabea5670f0be494, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  killEffect: {fileID: 19800000, guid: 04452f5987a43f14aa5a1841eace9442, type: 2}
+  groundEffect: {fileID: 19800000, guid: 08b12d2804fa2e14bb5107aa3a436c61, type: 2}
 --- !u!1 &1107444145
 GameObject:
   m_ObjectHideFlags: 0

@@ -187,6 +187,9 @@ public class CoconutScript : MonoBehaviour
   {
     animator.SetTrigger("ground");
 
+    // PARTICLES
+    SpecialEffects.Instance.GroundEffect(transform.position);
+
     // Notify game script
     gameScript.CoconutDestroyed();
 

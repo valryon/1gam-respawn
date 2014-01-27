@@ -53,6 +53,9 @@ public class RandomGuyScript : MonoBehaviour
   {
     if (killingCoconut != null)
     {
+      // Juice!
+      SpecialEffects.Instance.KillEffect(killingCoconut.transform.position);
+
       GameScript gameScript = FindObjectOfType<GameScript>();
       if (gameScript != null)
       {
