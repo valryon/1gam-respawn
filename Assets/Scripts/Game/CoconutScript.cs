@@ -109,6 +109,12 @@ public class CoconutScript : MonoBehaviour
       }
     }
 
+    // Another coconut?
+    //CoconutScript anotherCoconut = collision.gameObject.GetComponent<CoconutScript>();
+    //if (anotherCoconut != null)
+    //{
+    //}
+
     // The ground?
     if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
     {
