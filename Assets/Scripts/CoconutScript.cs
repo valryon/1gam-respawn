@@ -3,17 +3,26 @@ using System.Collections;
 
 public class CoconutScript : MonoBehaviour
 {
+  /// <summary>
+  /// Force applied when using arrows to move the coconut
+  /// </summary>
   public float controlForce;
+
+  /// <summary>
+  /// Rebound when hitting an enemy
+  /// </summary>
   public float reboundForce;
-  public float reboundVelocityPurcent;
 
-  public float slowmoMaxTime;
+  /// <summary>
+  /// Available slowmotion time
+  /// </summary>
+  public float slowmotionTotalTimeInSeconds;
 
-  private bool isFalling;
-
+  private bool isFalling, isSlowmotion;
   private int reboundCountThisFrame;
-  private float slowmoTime;
+  private float slowmotionRemainingTime;
   private Vector2 currentVelocity;
+  private float previousRealtimeDelta;
 
   void Start()
   {
@@ -25,7 +34,7 @@ public class CoconutScript : MonoBehaviour
     controlForce = Mathf.Abs(controlForce);
     isFalling = false;
 
-    slowmoTime = slowmoMaxTime;
+    slowmotionRemainingTime = slowmotionTotalTimeInSeconds;
   }
 
   void Update()
@@ -43,19 +52,35 @@ public class CoconutScript : MonoBehaviour
     else
     {
       // SLOW MOTION
-      if (slowmoTime > 0f && Input.GetKey(KeyCode.Space))
+
+      if (Input.GetKey(KeyCode.Space) && slowmotionRemainingTime > 0)
       {
-        slowmoTime -= Time.deltaTime + (Time.deltaTime * (1 - Time.timeScale));
-        EnableSlowMotion();
+        if (isSlowmotion || (slowmotionRemainingTime > (slowmotionTotalTimeInSeconds / 8f)))
+        {
+          isSlowmotion = true;
+
+          // delta time is affected by slow motion so it can't be used for a cooldown here
+          ApplySlowMotion();
+          slowmotionRemainingTime -= (Time.realtimeSinceStartup - previousRealtimeDelta);
+        }
+        else
+        {
+          isSlowmotion = false;
+        }
       }
       else
       {
-        // Regen slow motion
-        slowmoTime += Time.deltaTime;
-        DisableSlowMotion();
+        isSlowmotion = false;
       }
-      Debug.Log(slowmoTime);
-      slowmoTime = Mathf.Clamp(slowmoTime, 0f, slowmoMaxTime);
+
+      if (isSlowmotion == false)
+      {
+        // Regen slow motion
+        DisableSlowMotion();
+        slowmotionRemainingTime += Time.deltaTime;
+      }
+
+      slowmotionRemainingTime = Mathf.Clamp(slowmotionRemainingTime, 0f, slowmotionTotalTimeInSeconds);
 
       // ARROWS to move slightly
       if (Input.GetKeyDown(KeyCode.LeftArrow))
@@ -85,6 +110,7 @@ public class CoconutScript : MonoBehaviour
                 transform.position.z
                 );
     }
+    previousRealtimeDelta = Time.realtimeSinceStartup;
   }
 
   void FixedUpdate()
@@ -177,10 +203,10 @@ public class CoconutScript : MonoBehaviour
     DisableSlowMotion();
   }
 
-  private void EnableSlowMotion()
+  private void ApplySlowMotion()
   {
     Time.timeScale = 0.15f;
-    Time.fixedDeltaTime = 0.02f * Time.timeScale;
+    Time.fixedDeltaTime = 0.02f * Time.timeScale; // Smooth physics
   }
 
   private void DisableSlowMotion()
