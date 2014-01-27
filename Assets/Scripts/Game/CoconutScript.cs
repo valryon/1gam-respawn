@@ -63,22 +63,22 @@ public class CoconutScript : MonoBehaviour
       bool isMoving = false;
 
       // ARROWS to move slightly
-      if (Input.GetKeyDown(KeyCode.LeftArrow))
+      if (Input.GetKey(KeyCode.LeftArrow))
       {
         isMoving = true;
         rigidbody2D.AddForce(new Vector2(-1 * controlForce.x, controlForce.y / 10f));
       }
-      if (Input.GetKeyDown(KeyCode.RightArrow))
+      if (Input.GetKey(KeyCode.RightArrow))
       {
         isMoving = true;
         rigidbody2D.AddForce(new Vector2(controlForce.x, (controlForce.y / 10f)));
       }
-      if (Input.GetKeyDown(KeyCode.UpArrow))
+      if (Input.GetKey(KeyCode.UpArrow))
       {
         isMoving = true;
         rigidbody2D.AddForce(new Vector2(0, controlForce.y / 2f));
       }
-      if (Input.GetKeyDown(KeyCode.DownArrow))
+      if (Input.GetKey(KeyCode.DownArrow))
       {
         isMoving = true;
         rigidbody2D.AddForce(new Vector2(0, -controlForce.y));
