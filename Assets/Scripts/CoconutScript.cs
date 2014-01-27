@@ -39,13 +39,18 @@ public class CoconutScript : MonoBehaviour
         }
       }
     }
-  }
 
+    if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
+    {
+      // Destroy the coconut
+      DestroyOnGroundCollision();
+    }
+  }
 
   /// <summary>
   /// Make the terrible coconut fall on its target
   /// </summary>
-  public void Fall()
+  private void Fall()
   {
     rigidbody2D.gravityScale = 1f;
     collider2D.enabled = true;
@@ -55,8 +60,32 @@ public class CoconutScript : MonoBehaviour
   /// Kill someone violently
   /// </summary>
   /// <param name="theDude"></param>
-  public void HitDude(RandomGuyScript theDude)
+  private void HitDude(RandomGuyScript theDude)
   {
     theDude.Kill(this);
+  }
+
+  /// <summary>
+  /// Coconut breaks on ground
+  /// </summary>
+  private void DestroyOnGroundCollision()
+  {
+    // Notify game script
+    GameScript gameScript = FindObjectOfType<GameScript>();
+    if (gameScript != null)
+    {
+      gameScript.CoconutDestroyed();
+    }
+
+    // Change sprite?
+    SpriteRenderer spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+    spriteRenderer.color = Color.grey;
+
+    // Stop moving 
+    Destroy(rigidbody2D);
+    Destroy(collider2D);
+
+    // Remove script
+    Destroy(this);
   }
 }

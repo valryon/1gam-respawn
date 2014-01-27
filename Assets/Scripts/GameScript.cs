@@ -15,6 +15,8 @@ public class GameScript : MonoBehaviour
   public float minSpawnCooldownInSeconds = 0.45f;
   public float maxSpawnCooldownInSeconds = 1.25f;
 
+  public float respawnTimeInSeconds = 1.5f;
+
   private Transform randomGuysParent;
   private float cooldown;
 
@@ -52,8 +54,26 @@ public class GameScript : MonoBehaviour
   /// </summary>
   private void SpawnCoconut()
   {
-    Transform coconut = Instantiate(coconutPrefab, coconutPrefab.position, Quaternion.identity) as Transform;
+    Transform coconut = Instantiate(coconutPrefab, coconutSpawn.position, Quaternion.identity) as Transform;
     coconut.Rotate(new Vector3(0, 0, Random.Range(0.75f, 1.25f)));
+  }
+
+  /// <summary>
+  /// 
+  /// </summary>
+  public void CoconutDestroyed()
+  {
+    // Regenerate a coconut in few seconds
+    StartCoroutine(RespawnCoconut(respawnTimeInSeconds));
+  }
+
+  IEnumerator RespawnCoconut(float cooldown)
+  {
+    yield return new WaitForSeconds(cooldown);
+
+    SpawnCoconut();
+
+    yield return null;
   }
 
   /// <summary>
@@ -75,4 +95,10 @@ public class GameScript : MonoBehaviour
       randomGuyScript.direction = Mathf.Sign(spawn.localScale.x);
     }
   }
+
+  public void GuyDestroyed()
+  {
+
+  }
+
 }
