@@ -30,6 +30,7 @@ public class CoconutScript : MonoBehaviour
 
   private GameScript gameScript;
 
+  private Animator animator;
 
   void Start()
   {
@@ -38,6 +39,8 @@ public class CoconutScript : MonoBehaviour
     {
       Debug.LogError("Missing Game script!");
     }
+
+    animator = GetComponent<Animator>();
 
     // Disable physics
     rigidbody2D.velocity = Vector2.zero;
@@ -144,11 +147,17 @@ public class CoconutScript : MonoBehaviour
       }
     }
 
+    // The ground?
     if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
     {
       // Destroy the coconut
       DestroyOnGroundCollision();
     }
+  }
+
+  void OnTriggerEnter2D(Collider otherCollider)
+  {
+    // Pick bonus?
   }
 
   /// <summary>
@@ -157,6 +166,7 @@ public class CoconutScript : MonoBehaviour
   private void Fall()
   {
     isFalling = true;
+    animator.SetTrigger("fall");
 
     rigidbody2D.gravityScale = 1f;
     collider2D.enabled = true;
@@ -168,6 +178,8 @@ public class CoconutScript : MonoBehaviour
   /// <param name="theDude"></param>
   private void HitDude(RandomGuyScript theDude, Vector2 normal)
   {
+    animator.SetTrigger("kill");
+
     theDude.Kill(this);
 
     // Slowmotion bonus
@@ -195,12 +207,10 @@ public class CoconutScript : MonoBehaviour
   /// </summary>
   private void DestroyOnGroundCollision()
   {
+    animator.SetTrigger("ground");
+
     // Notify game script
     gameScript.CoconutDestroyed();
-
-    // Change sprite?
-    SpriteRenderer spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-    spriteRenderer.color = Color.grey;
 
     // Stop moving 
     Destroy(rigidbody2D);

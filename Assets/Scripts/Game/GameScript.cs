@@ -68,13 +68,20 @@ public class GameScript : MonoBehaviour
   /// </summary>
   public float maxSpawnCooldownInSeconds = 1.25f;
 
+  //------------------------------------------------
+  // Bonuses  
+  //------------------------------------------------
+  public BonusScript bonusPrefab;
+  public float minBonusSpawnFrequency = 5f;
+  public float maxBonusSpawnFrequency = 8f;
+
   private bool isEnded;
 
   private float timeleft;
   private int score;
   private int combo;
-  private Transform randomGuysParent;
-  private float enemySpawnCooldown, comboCooldown;
+  private Transform randomGuysParent, bonusParent;
+  private float enemySpawnCooldown, comboCooldown, bonusCooldown;
 
   private GameGUI gui;
 
@@ -85,7 +92,7 @@ public class GameScript : MonoBehaviour
     // Check parameters
     if (randomGuySpawns == null || randomGuySpawns.Length == 0) Debug.LogError("Missing randomGuySpawns!");
     if (randomGuyPrefab == null) Debug.LogError("Missing RandomGuy prefab!");
-
+    if (bonusPrefab == null) Debug.LogError("Missing Bonus prefab!");
     if (coconutSpawn == null) Debug.LogError("Missing coconutSpawn!");
 
     gui = FindObjectOfType<GameGUI>();
@@ -93,16 +100,18 @@ public class GameScript : MonoBehaviour
 
     // Initialize
     enemySpawnCooldown = Random.Range(minSpawnCooldownInSeconds, maxSpawnCooldownInSeconds);
+    bonusCooldown = Random.Range(minBonusSpawnFrequency, maxBonusSpawnFrequency);
 
     timeleft = time;
     score = 0;
     combo = 1;
 
-    // Create a parent for enemies hierarchy
+    // Create a parent for a proper hierarchy
     randomGuysParent = new GameObject("Random Guys").transform;
+    bonusParent = new GameObject("Bonuses").transform;
 
     // Instantiate coconut
-    SpawnCoconut();
+    StartCoroutine(RespawnCoconut(1f));
 
     gui.SetVisible(true);
   }
@@ -120,6 +129,14 @@ public class GameScript : MonoBehaviour
       {
         enemySpawnCooldown = Random.Range(minSpawnCooldownInSeconds, maxSpawnCooldownInSeconds);
         SpawnGuy();
+      }
+
+      // Same for bonus
+      bonusCooldown -= Time.deltaTime;
+      if (bonusCooldown <= 0f)
+      {
+        bonusCooldown = Random.Range(minBonusSpawnFrequency, maxBonusSpawnFrequency);
+        SpawnBonus();
       }
 
       // Reset combo is cooldown drops to 0
@@ -154,15 +171,6 @@ public class GameScript : MonoBehaviour
   }
 
   /// <summary>
-  /// Create a random coconut
-  /// </summary>
-  private void SpawnCoconut()
-  {
-    Transform coconut = Instantiate(coconutPrefab, coconutSpawn.position, Quaternion.identity) as Transform;
-    coconut.Rotate(new Vector3(0, 0, Random.Range(0.75f, 1.25f)));
-  }
-
-  /// <summary>
   /// 
   /// </summary>
   public void CoconutDestroyed()
@@ -179,6 +187,17 @@ public class GameScript : MonoBehaviour
 
     yield return null;
   }
+
+  /// <summary>
+  /// Create a random coconut
+  /// </summary>
+  private void SpawnCoconut()
+  {
+    Transform coconut = Instantiate(coconutPrefab, coconutSpawn.position, Quaternion.identity) as Transform;
+    coconut.Rotate(new Vector3(0, 0, Random.Range(0.75f, 1.25f)));
+    //coconut.parent = coconutSpawn;
+  }
+
 
   /// <summary>
   /// Create a new moving target
@@ -198,6 +217,20 @@ public class GameScript : MonoBehaviour
     {
       randomGuyScript.direction = Mathf.Sign(spawn.localScale.x);
     }
+  }
+
+  /// <summary>
+  /// New bonus
+  /// </summary>
+  private void SpawnBonus()
+  {
+    BonusScript bonus = Instantiate(bonusPrefab) as BonusScript;
+    bonus.SetRandomType();
+
+    // Location on screen
+    bonus.transform.position = Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(0.15f, 0.8f), Random.Range(0.15f, 0.8f), 0));
+    bonus.transform.position = new Vector3(bonus.transform.position.x, bonus.transform.position.y, 0); // Reset 0
+    bonus.transform.parent = bonusParent;
   }
 
   public void GuyDestroyed()
