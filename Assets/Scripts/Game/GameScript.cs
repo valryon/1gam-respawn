@@ -97,7 +97,7 @@ public class GameScript : MonoBehaviour
   private float timeleft;
   private int score;
   private int combo;
-  private Transform randomGuysParent, bonusParent;
+  private Transform randomGuysParent, bonusParent, coconutsParent;
   private float enemySpawnCooldown, comboCooldown, bonusCooldown;
 
   //private List<>
@@ -134,6 +134,7 @@ public class GameScript : MonoBehaviour
     // Create a parent for a proper hierarchy
     randomGuysParent = new GameObject("Random Guys").transform;
     bonusParent = new GameObject("Bonuses").transform;
+    coconutsParent = new GameObject("Coconuts").transform;
 
     // Instantiate coconut
     StartCoroutine(RespawnCoconut(1f));
@@ -230,7 +231,7 @@ public class GameScript : MonoBehaviour
   {
     Transform coconut = Instantiate(coconutPrefab, coconutSpawn.position, Quaternion.identity) as Transform;
     coconut.Rotate(new Vector3(0, 0, Random.Range(0.75f, 1.25f)));
-    //coconut.parent = coconutSpawn;
+    coconut.parent = coconutsParent;
   }
 
 

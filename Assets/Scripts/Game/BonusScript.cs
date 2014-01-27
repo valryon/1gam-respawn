@@ -21,6 +21,7 @@ public class BonusScript : MonoBehaviour
   void Start()
   {
     text = GetComponentInChildren<TextMesh>();
+    text.renderer.enabled = false;
     animator = GetComponent<Animator>();
   }
 
@@ -39,6 +40,7 @@ public class BonusScript : MonoBehaviour
     GameScript game = FindObjectOfType<GameScript>();
 
     // Visual feedback
+    text.renderer.enabled = true;
     text.text = bonus.ToString();
     animator.SetTrigger("pick");
 
@@ -49,7 +51,8 @@ public class BonusScript : MonoBehaviour
         GameObject coconutClone = Instantiate(coconut.gameObject) as GameObject;
         coconutClone.rigidbody2D.AddForce(new Vector2(Random.Range(-50f, 50f), Random.Range(50f, 150f)));
 
-        //var coconutCloneScript = coconutClone.GetComponent<CoconutScript>();
+        var coconutCloneScript = coconutClone.GetComponent<CoconutScript>();
+        coconutCloneScript.IsClone = true;
 
         break;
       //case BonusType.Fly:
