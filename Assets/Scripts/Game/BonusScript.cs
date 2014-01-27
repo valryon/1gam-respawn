@@ -62,7 +62,7 @@ public class BonusScript : MonoBehaviour
         StartCoroutine(EnableColliderAfterCooldown(coconutClone, 0.5f));
       
         // Eject
-        coconutClone.rigidbody2D.AddForce(new Vector2(Random.Range(-50f, 150f), Random.Range(1000f, 2500f)));
+        coconutClone.rigidbody2D.AddForce(new Vector2(Random.Range(-50f, 150f), Random.Range(1500f, 2500f)));
 
         break;
       //case BonusType.Fly:

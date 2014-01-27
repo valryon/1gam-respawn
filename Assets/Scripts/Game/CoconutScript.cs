@@ -18,9 +18,11 @@ public class CoconutScript : MonoBehaviour
   private bool isFalling;
   private bool hasReboundThisFrame;
 
-  private GameScript gameScript;
+  private int powerLevel;
 
+  private GameScript gameScript;
   private Animator animator;
+  private TrailRenderer trail;
 
   void Start()
   {
@@ -29,6 +31,8 @@ public class CoconutScript : MonoBehaviour
     {
       Debug.LogError("Missing Game script!");
     }
+
+    trail = GetComponentInChildren<TrailRenderer>();
 
     animator = GetComponent<Animator>();
 
@@ -44,6 +48,8 @@ public class CoconutScript : MonoBehaviour
     {
       Fall();
     }
+
+    UpdatePower();
   }
 
   void Update()
@@ -88,17 +94,6 @@ public class CoconutScript : MonoBehaviour
       {
         //Soundbank.Instance.PlaySound("control", transform.position);
       }
-
-      // Keep in camera bounds
-      var dist = (transform.position - Camera.main.transform.position).z;
-      var leftBorder = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, dist)).x;
-      var rightBorder = Camera.main.ViewportToWorldPoint(new Vector3(1, 0, dist)).x;
-
-      transform.position = new Vector3(
-                Mathf.Clamp(transform.position.x, leftBorder, rightBorder),
-                transform.position.y,
-                transform.position.z
-                );
     }
   }
 
@@ -185,10 +180,12 @@ public class CoconutScript : MonoBehaviour
     rigidbody2D.velocity = Vector2.zero;
     rigidbody2D.AddForce(force);
 
+    UpdatePower();
+
     // JUICE
     // Force should be very small (0.5f = waow). Duration is in seconds
-    int powerLevel = (gameScript.ComboCount / 8) + 1 ;
     SpecialEffects.Instance.ShakeCamera(powerLevel / 16f, 0.1f);
+
   }
 
   /// <summary>
@@ -211,6 +208,14 @@ public class CoconutScript : MonoBehaviour
 
     // Remove script
     Destroy(this);
+  }
+
+  public void UpdatePower() 
+  {
+    powerLevel = (gameScript.ComboCount / 5) + 1 ;
+
+    trail.endWidth = powerLevel * 0.04f;
+    trail.startWidth = powerLevel * 0.04f;
   }
 
   public bool IsClone
