@@ -52,10 +52,17 @@ public class BonusScript : MonoBehaviour
     {
       case BonusType.Clone:
         GameObject coconutClone = Instantiate(coconut.gameObject) as GameObject;
-        coconutClone.rigidbody2D.AddForce(new Vector2(Random.Range(-50f, 50f), Random.Range(50f, 150f)));
 
+        // Tell the script it's a clone
         var coconutCloneScript = coconutClone.GetComponent<CoconutScript>();
         coconutCloneScript.IsClone = true;
+      
+        // Disable the collider for few sec
+        coconutClone.collider2D.enabled = false;
+        StartCoroutine(EnableColliderAfterCooldown(coconutClone, 0.5f));
+      
+        // Eject
+        coconutClone.rigidbody2D.AddForce(new Vector2(Random.Range(-50f, 150f), Random.Range(1000f, 2500f)));
 
         break;
       //case BonusType.Fly:
@@ -67,4 +74,10 @@ public class BonusScript : MonoBehaviour
         break;
     }
   }
+
+	private IEnumerator EnableColliderAfterCooldown(GameObject coconut, float cooldown) {
+    yield return new WaitForSeconds(cooldown);
+
+    coconut.collider2D.enabled = true;
+	}
 }
