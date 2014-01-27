@@ -6,7 +6,7 @@ public class CoconutScript : MonoBehaviour
   /// <summary>
   /// Force applied when using arrows to move the coconut
   /// </summary>
-  public float controlForce;
+  public Vector2 controlForce;
 
   /// <summary>
   /// Rebound when hitting an enemy
@@ -19,19 +19,26 @@ public class CoconutScript : MonoBehaviour
   public float slowmotionTotalTimeInSeconds;
 
   private bool isFalling, isSlowmotion;
-  private int reboundCountThisFrame;
   private float slowmotionRemainingTime;
-  private Vector2 currentVelocity;
   private float previousRealtimeDelta;
+  private bool hasReboundThisFrame;
+
+  private GameScript gameScript;
+
 
   void Start()
   {
+    gameScript = FindObjectOfType<GameScript>();
+    if (gameScript == null)
+    {
+      Debug.LogError("Missing Game script!");
+    }
+
     // Disable physics
     rigidbody2D.velocity = Vector2.zero;
     rigidbody2D.gravityScale = 0f;
     collider2D.enabled = false;
 
-    controlForce = Mathf.Abs(controlForce);
     isFalling = false;
 
     slowmotionRemainingTime = slowmotionTotalTimeInSeconds;
@@ -39,7 +46,7 @@ public class CoconutScript : MonoBehaviour
 
   void Update()
   {
-    reboundCountThisFrame = 0;
+    hasReboundThisFrame = false;
 
     if (isFalling == false)
     {
@@ -52,7 +59,6 @@ public class CoconutScript : MonoBehaviour
     else
     {
       // SLOW MOTION
-
       if (Input.GetKey(KeyCode.Space) && slowmotionRemainingTime > 0)
       {
         if (isSlowmotion || (slowmotionRemainingTime > (slowmotionTotalTimeInSeconds / 8f)))
@@ -81,23 +87,25 @@ public class CoconutScript : MonoBehaviour
       }
 
       slowmotionRemainingTime = Mathf.Clamp(slowmotionRemainingTime, 0f, slowmotionTotalTimeInSeconds);
+      gameScript.GUI.UpdateSlowmotion(slowmotionRemainingTime / slowmotionTotalTimeInSeconds);
 
       // ARROWS to move slightly
       if (Input.GetKeyDown(KeyCode.LeftArrow))
       {
-        // Lot to left, a bit up
-        rigidbody2D.AddForce(new Vector2(-1 * controlForce, (1 * controlForce) / 10f));
+        rigidbody2D.AddForce(new Vector2(-1 * controlForce.x, controlForce.y / 10f));
       }
-      else if (Input.GetKeyDown(KeyCode.RightArrow))
+      if (Input.GetKeyDown(KeyCode.RightArrow))
       {
-        // Lot to right, a bit up
-        rigidbody2D.AddForce(new Vector2(1 * controlForce, (1 * controlForce) / 10f));
+        rigidbody2D.AddForce(new Vector2(controlForce.x, (controlForce.y / 10f)));
       }
-      //else if (Input.GetKeyDown(KeyCode.UpArrow))
-      //{
-      //  // Lot to right, a bit up
-      //  rigidbody2D.AddForce(new Vector2(0, controlForce));
-      //}
+      if (Input.GetKeyDown(KeyCode.UpArrow))
+      {
+        rigidbody2D.AddForce(new Vector2(0, controlForce.y / 2f));
+      }
+      if (Input.GetKeyDown(KeyCode.DownArrow))
+      {
+        rigidbody2D.AddForce(new Vector2(0, -controlForce.y));
+      }
 
       // Keep in camera bounds
       var dist = (transform.position - Camera.main.transform.position).z;
@@ -111,13 +119,6 @@ public class CoconutScript : MonoBehaviour
                 );
     }
     previousRealtimeDelta = Time.realtimeSinceStartup;
-  }
-
-  void FixedUpdate()
-  {
-    // Store velocity from FixedUpdate
-    // So we can use it in collisions (where the velocity has been reseted)
-    currentVelocity = rigidbody2D.velocity;
   }
 
   void OnCollisionEnter2D(Collision2D collision)
@@ -165,14 +166,19 @@ public class CoconutScript : MonoBehaviour
     theDude.Kill(this);
 
     // Rebound
-    reboundCountThisFrame++;
+    Vector2 baseForce = (normal * reboundForce);
+    Vector2 force = Vector2.zero;
+
+    if (hasReboundThisFrame == false)
+    {
+      hasReboundThisFrame = true;
+      force = baseForce + ((baseForce * (gameScript.ComboCount - 1)) / 10f); // Bonus for each combo
+    }
+    else
+    {
+      force = baseForce / 4f;
+    }
     rigidbody2D.velocity = Vector2.zero;
-
-    Vector2 force = (normal * reboundForce) / reboundCountThisFrame;
-
-    // The rebound relies on the fall velocity
-    //force += force * (Mathf.Abs(currentVelocity.y) * reboundVelocityPurcent);
-
     rigidbody2D.AddForce(force);
   }
 
@@ -182,11 +188,7 @@ public class CoconutScript : MonoBehaviour
   private void DestroyOnGroundCollision()
   {
     // Notify game script
-    GameScript gameScript = FindObjectOfType<GameScript>();
-    if (gameScript != null)
-    {
-      gameScript.CoconutDestroyed();
-    }
+    gameScript.CoconutDestroyed();
 
     // Change sprite?
     SpriteRenderer spriteRenderer = GetComponentInChildren<SpriteRenderer>();

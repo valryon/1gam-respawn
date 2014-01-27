@@ -6,19 +6,76 @@ using System.Collections;
 /// </summary>
 public class GameScript : MonoBehaviour
 {
-  public Transform randomGuyPrefab;
-  public Transform[] randomGuySpawns;
+  //------------------------------------------------
+  // Gameplay
+  //------------------------------------------------
 
-  public Transform coconutSpawn;
+  /// <summary>
+  /// Total time 
+  /// </summary>
+  public float time = 60f;
+
+  /// <summary>
+  /// Given time between two combos
+  /// </summary>
+  public float comboBaseCooldown = 5f;
+
+  /// <summary>
+  /// Points per kill
+  /// </summary>
+  public int points = 100;
+
+  //------------------------------------------------
+  // Coconut
+  //------------------------------------------------
+
+  /// <summary>
+  /// Model for coconuts
+  /// </summary>
   public Transform coconutPrefab;
 
-  public float minSpawnCooldownInSeconds = 0.45f;
-  public float maxSpawnCooldownInSeconds = 1.25f;
+  /// <summary>
+  /// Where to spawn coconuts
+  /// </summary>
+  public Transform coconutSpawn;
 
+  /// <summary>
+  /// Coconut respawn
+  /// </summary>
   public float respawnTimeInSeconds = 1.5f;
 
+  //------------------------------------------------
+  // Random guy
+  //------------------------------------------------
+
+  /// <summary>
+  /// Model for random guys
+  /// </summary>
+  public Transform randomGuyPrefab;
+
+  /// <summary>
+  /// Where to spawn 
+  /// </summary>
+  public Transform[] randomGuySpawns;
+
+  /// <summary>
+  /// Random guy spawn frequency (min)
+  /// </summary>
+  public float minSpawnCooldownInSeconds = 0.45f;
+
+  /// <summary>
+  /// Random guy spawn frequency (max)
+  /// </summary>
+  public float maxSpawnCooldownInSeconds = 1.25f;
+
+
+  private float timeleft;
+  private int score;
+  private int combo;
   private Transform randomGuysParent;
-  private float cooldown;
+  private float enemySpawnCooldown, comboCooldown;
+
+  private GameGUI gui;
 
   void Start()
   {
@@ -28,8 +85,15 @@ public class GameScript : MonoBehaviour
 
     if (coconutSpawn == null) Debug.LogError("Missing coconutSpawn!");
 
+    gui = FindObjectOfType<GameGUI>();
+    if (gui == null) Debug.LogError("Missing GUI!");
+
     // Initialize
-    cooldown = Random.Range(minSpawnCooldownInSeconds, maxSpawnCooldownInSeconds);
+    enemySpawnCooldown = Random.Range(minSpawnCooldownInSeconds, maxSpawnCooldownInSeconds);
+
+    timeleft = time;
+    score = 0;
+    combo = 1;
 
     // Create a parent for enemies hierarchy
     randomGuysParent = new GameObject("Random Guys").transform;
@@ -41,12 +105,24 @@ public class GameScript : MonoBehaviour
   void Update()
   {
     // Not a coroutine so we can modify the min/max and use a random more simply
-    cooldown -= Time.deltaTime;
-    if (cooldown <= 0f)
+    enemySpawnCooldown -= Time.deltaTime;
+    if (enemySpawnCooldown <= 0f)
     {
-      cooldown = Random.Range(minSpawnCooldownInSeconds, maxSpawnCooldownInSeconds);
+      enemySpawnCooldown = Random.Range(minSpawnCooldownInSeconds, maxSpawnCooldownInSeconds);
       SpawnGuy();
     }
+
+    // Reset combo is cooldown drops to 0
+    if (comboCooldown > 0)
+    {
+      comboCooldown -= Time.deltaTime;
+      if (comboCooldown <= 0f)
+        combo = 1;
+    }
+
+    timeleft -= Time.deltaTime;
+
+    gui.UpdateGUI(timeleft, score, combo);
   }
 
   /// <summary>
@@ -98,7 +174,31 @@ public class GameScript : MonoBehaviour
 
   public void GuyDestroyed()
   {
+    // Score
+    score += (points * combo);
 
+    // Combo
+    comboCooldown = comboBaseCooldown;
+    combo++;
+  }
+
+  /// <summary>
+  /// Current combo count
+  /// </summary>
+  public int ComboCount
+  {
+    get
+    {
+      return combo;
+    }
+  }
+
+  public GameGUI GUI
+  {
+    get
+    {
+      return gui;
+    }
   }
 
 }

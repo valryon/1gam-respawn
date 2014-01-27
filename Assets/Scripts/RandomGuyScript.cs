@@ -53,7 +53,11 @@ public class RandomGuyScript : MonoBehaviour
   {
     if (killingCoconut != null)
     {
-
+      GameScript gameScript = FindObjectOfType<GameScript>();
+      if (gameScript != null)
+      {
+        gameScript.GuyDestroyed();
+      }
     }
 
     Destroy(gameObject);
