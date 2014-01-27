@@ -33,6 +33,9 @@ public class BonusScript : MonoBehaviour
 
   public void Pick(CoconutScript coconut)
   {
+    // Sound
+    Soundbank.Instance.PlaySound("bonus", transform.position);
+
     // Auto destruction
     collider2D.enabled = false;
     Destroy(gameObject, 5f);

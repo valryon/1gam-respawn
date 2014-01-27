@@ -60,22 +60,33 @@ public class CoconutScript : MonoBehaviour
     }
     else
     {
+      bool isMoving = false;
+
       // ARROWS to move slightly
       if (Input.GetKeyDown(KeyCode.LeftArrow))
       {
+        isMoving = true;
         rigidbody2D.AddForce(new Vector2(-1 * controlForce.x, controlForce.y / 10f));
       }
       if (Input.GetKeyDown(KeyCode.RightArrow))
       {
+        isMoving = true;
         rigidbody2D.AddForce(new Vector2(controlForce.x, (controlForce.y / 10f)));
       }
       if (Input.GetKeyDown(KeyCode.UpArrow))
       {
+        isMoving = true;
         rigidbody2D.AddForce(new Vector2(0, controlForce.y / 2f));
       }
       if (Input.GetKeyDown(KeyCode.DownArrow))
       {
+        isMoving = true;
         rigidbody2D.AddForce(new Vector2(0, -controlForce.y));
+      }
+
+      if (isMoving)
+      {
+        //Soundbank.Instance.PlaySound("control", transform.position);
       }
 
       // Keep in camera bounds
@@ -189,6 +200,7 @@ public class CoconutScript : MonoBehaviour
 
     // PARTICLES
     SpecialEffects.Instance.GroundEffect(transform.position);
+    Soundbank.Instance.PlaySound("ground", transform.position);
 
     // Notify game script
     gameScript.CoconutDestroyed();

@@ -55,6 +55,7 @@ public class RandomGuyScript : MonoBehaviour
     {
       // Juice!
       SpecialEffects.Instance.KillEffect(killingCoconut.transform.position);
+      Soundbank.Instance.PlaySound("kill", transform.position);
 
       GameScript gameScript = FindObjectOfType<GameScript>();
       if (gameScript != null)
