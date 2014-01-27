@@ -41,6 +41,7 @@ public class BonusScript : MonoBehaviour
     Destroy(gameObject, 5f);
 
     GameScript game = FindObjectOfType<GameScript>();
+    game.DisplayMessage(MessageType.Bonus);
 
     // Visual feedback
     text.renderer.enabled = true;

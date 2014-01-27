@@ -212,10 +212,20 @@ public class CoconutScript : MonoBehaviour
 
   public void UpdatePower() 
   {
+    var oldPower = powerLevel;
+
     powerLevel = (gameScript.ComboCount / 5) + 1 ;
 
-    trail.endWidth = powerLevel * 0.04f;
-    trail.startWidth = powerLevel * 0.04f;
+    if(oldPower != powerLevel) 
+    {
+      trail.endWidth = powerLevel * 0.04f;
+      trail.startWidth = powerLevel * 0.04f;
+
+      if (powerLevel > 1) 
+      {
+        gameScript.DisplayMessage(MessageType.Power);
+      }
+    }
   }
 
   public bool IsClone

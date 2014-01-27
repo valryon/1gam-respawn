@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 
 /// <summary>
@@ -100,13 +101,13 @@ public class GameScript : MonoBehaviour
   private Transform randomGuysParent, bonusParent, coconutsParent;
   private float enemySpawnCooldown, comboCooldown, bonusCooldown;
 
-  //private List<>
-
   private bool isSlowmotion;
   private float slowmotionRemainingTime;
   private float previousRealtimeDelta;
 
   private GameGUI gui;
+
+  private List<FakeCoconutScript> fakeCoconuts;
 
   void Start()
   {
@@ -136,10 +137,13 @@ public class GameScript : MonoBehaviour
     bonusParent = new GameObject("Bonuses").transform;
     coconutsParent = new GameObject("Coconuts").transform;
 
+    fakeCoconuts = new List<FakeCoconutScript>(FindObjectsOfType<FakeCoconutScript>());
+
     // Instantiate coconut
     StartCoroutine(RespawnCoconut(1f));
 
     gui.SetVisible(true);
+    DisplayMessage(MessageType.Start);
   }
 
   void Update()
@@ -210,6 +214,8 @@ public class GameScript : MonoBehaviour
     var coconuts = FindObjectsOfType<CoconutScript>();
     if (coconuts.Length <= 1)
     {
+      DisplayMessage(MessageType.Fail);
+
       // Regenerate a fresh new coconut in few seconds
       StartCoroutine(RespawnCoconut(respawnTimeInSeconds));
     }
@@ -277,6 +283,9 @@ public class GameScript : MonoBehaviour
     // Combo
     comboCooldown = comboBaseCooldown;
     combo++;
+
+    // Joke
+    DisplayMessage(MessageType.Kill);
   }
 
   // Slow motion
@@ -330,6 +339,15 @@ public class GameScript : MonoBehaviour
   internal void AddSlowmotionBonus(float amount)
   {
     slowmotionRemainingTime += amount;
+  }
+
+  public void DisplayMessage(MessageType mType) {
+    // Find a random free coconut
+    var fakeCoconut = fakeCoconuts.OrderBy(f => Random.Range(0f,1f)).Where(f => f.IsBusy == false).FirstOrDefault();
+
+    if(fakeCoconut != null) {
+      fakeCoconut.Message(mType);
+    }
   }
 
   /// <summary>
