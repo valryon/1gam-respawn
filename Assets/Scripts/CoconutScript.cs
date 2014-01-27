@@ -18,6 +18,11 @@ public class CoconutScript : MonoBehaviour
   /// </summary>
   public float slowmotionTotalTimeInSeconds;
 
+  /// <summary>
+  /// Slowmotion bonus per kill
+  /// </summary>
+  public float slowmotionBonusPerKill;
+
   private bool isFalling, isSlowmotion;
   private float slowmotionRemainingTime;
   private float previousRealtimeDelta;
@@ -164,6 +169,9 @@ public class CoconutScript : MonoBehaviour
   private void HitDude(RandomGuyScript theDude, Vector2 normal)
   {
     theDude.Kill(this);
+
+    // Slowmotion bonus
+    slowmotionRemainingTime += slowmotionBonusPerKill;
 
     // Rebound
     Vector2 baseForce = (normal * reboundForce);
