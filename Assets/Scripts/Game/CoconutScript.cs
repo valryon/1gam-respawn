@@ -13,19 +13,9 @@ public class CoconutScript : MonoBehaviour
   /// </summary>
   public float reboundForce;
 
-  /// <summary>
-  /// Available slowmotion time
-  /// </summary>
-  public float slowmotionTotalTimeInSeconds;
+  // ------
 
-  /// <summary>
-  /// Slowmotion bonus per kill
-  /// </summary>
-  public float slowmotionBonusPerKill;
-
-  private bool isFalling, isSlowmotion;
-  private float slowmotionRemainingTime;
-  private float previousRealtimeDelta;
+  private bool isFalling;
   private bool hasReboundThisFrame;
 
   private GameScript gameScript;
@@ -49,7 +39,11 @@ public class CoconutScript : MonoBehaviour
 
     isFalling = false;
 
-    slowmotionRemainingTime = slowmotionTotalTimeInSeconds;
+    // Clones fall directly
+    if (IsClone)
+    {
+      Fall();
+    }
   }
 
   void Update()
@@ -66,37 +60,6 @@ public class CoconutScript : MonoBehaviour
     }
     else
     {
-      // SLOW MOTION
-      if (Input.GetKey(KeyCode.Space) && slowmotionRemainingTime > 0)
-      {
-        if (isSlowmotion || (slowmotionRemainingTime > (slowmotionTotalTimeInSeconds / 8f)))
-        {
-          isSlowmotion = true;
-
-          // delta time is affected by slow motion so it can't be used for a cooldown here
-          ApplySlowMotion();
-          slowmotionRemainingTime -= (Time.realtimeSinceStartup - previousRealtimeDelta);
-        }
-        else
-        {
-          isSlowmotion = false;
-        }
-      }
-      else
-      {
-        isSlowmotion = false;
-      }
-
-      if (isSlowmotion == false)
-      {
-        // Regen slow motion
-        DisableSlowMotion();
-        slowmotionRemainingTime += Time.deltaTime;
-      }
-
-      slowmotionRemainingTime = Mathf.Clamp(slowmotionRemainingTime, 0f, slowmotionTotalTimeInSeconds);
-      gameScript.GameGUI.UpdateSlowmotion(slowmotionRemainingTime / slowmotionTotalTimeInSeconds);
-
       // ARROWS to move slightly
       if (Input.GetKeyDown(KeyCode.LeftArrow))
       {
@@ -126,7 +89,6 @@ public class CoconutScript : MonoBehaviour
                 transform.position.z
                 );
     }
-    previousRealtimeDelta = Time.realtimeSinceStartup;
   }
 
   void OnCollisionEnter2D(Collision2D collision)
@@ -155,15 +117,20 @@ public class CoconutScript : MonoBehaviour
     }
   }
 
-  void OnTriggerEnter2D(Collider otherCollider)
+  void OnTriggerEnter2D(Collider2D otherCollider)
   {
     // Pick bonus?
+    BonusScript bonus = otherCollider.GetComponent<BonusScript>();
+    if (bonus != null)
+    {
+      bonus.Pick(this);
+    }
   }
 
   /// <summary>
   /// Make the terrible coconut fall on its target
   /// </summary>
-  private void Fall()
+  public void Fall()
   {
     isFalling = true;
     animator.SetTrigger("fall");
@@ -183,7 +150,7 @@ public class CoconutScript : MonoBehaviour
     theDude.Kill(this);
 
     // Slowmotion bonus
-    slowmotionRemainingTime += slowmotionBonusPerKill;
+    gameScript.AddSlowmotionBonus(gameScript.slowmotionBonusPerKill);
 
     // Rebound
     Vector2 baseForce = (normal * reboundForce);
@@ -218,19 +185,12 @@ public class CoconutScript : MonoBehaviour
 
     // Remove script
     Destroy(this);
-
-    // Make sure we're not in slowmo
-    DisableSlowMotion();
   }
 
-  private void ApplySlowMotion()
+  public bool IsClone
   {
-    Time.timeScale = 0.15f;
-    Time.fixedDeltaTime = 0.02f * Time.timeScale; // Smooth physics
+    get;
+    set;
   }
 
-  private void DisableSlowMotion()
-  {
-    Time.timeScale = 1f;
-  }
 }

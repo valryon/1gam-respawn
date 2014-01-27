@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 /// <summary>
 /// Core gameplay script
@@ -24,6 +25,20 @@ public class GameScript : MonoBehaviour
   /// Points per kill
   /// </summary>
   public int points = 100;
+
+  //------------------------------------------------
+  // Slow motion
+  //------------------------------------------------
+
+  /// <summary>
+  /// Available slowmotion time
+  /// </summary>
+  public float slowmotionTotalTimeInSeconds;
+
+  /// <summary>
+  /// Slowmotion bonus per kill
+  /// </summary>
+  public float slowmotionBonusPerKill;
 
   //------------------------------------------------
   // Coconut
@@ -75,6 +90,8 @@ public class GameScript : MonoBehaviour
   public float minBonusSpawnFrequency = 5f;
   public float maxBonusSpawnFrequency = 8f;
 
+  // -----------
+
   private bool isEnded;
 
   private float timeleft;
@@ -82,6 +99,12 @@ public class GameScript : MonoBehaviour
   private int combo;
   private Transform randomGuysParent, bonusParent;
   private float enemySpawnCooldown, comboCooldown, bonusCooldown;
+
+  //private List<>
+
+  private bool isSlowmotion;
+  private float slowmotionRemainingTime;
+  private float previousRealtimeDelta;
 
   private GameGUI gui;
 
@@ -101,6 +124,8 @@ public class GameScript : MonoBehaviour
     // Initialize
     enemySpawnCooldown = Random.Range(minSpawnCooldownInSeconds, maxSpawnCooldownInSeconds);
     bonusCooldown = Random.Range(minBonusSpawnFrequency, maxBonusSpawnFrequency);
+
+    slowmotionRemainingTime = slowmotionTotalTimeInSeconds;
 
     timeleft = time;
     score = 0;
@@ -149,7 +174,11 @@ public class GameScript : MonoBehaviour
 
       timeleft -= Time.deltaTime;
 
+      // GUI
       gui.UpdateGUI(timeleft, score, combo);
+
+      // Slow motion
+      HandleSlowMotion();
 
       // Time is over?
       if (timeleft < 0)
@@ -168,6 +197,8 @@ public class GameScript : MonoBehaviour
       Application.LoadLevel("Game");
     }
 
+    // slow motion independant time
+    previousRealtimeDelta = Time.realtimeSinceStartup;
   }
 
   /// <summary>
@@ -175,8 +206,12 @@ public class GameScript : MonoBehaviour
   /// </summary>
   public void CoconutDestroyed()
   {
-    // Regenerate a coconut in few seconds
-    StartCoroutine(RespawnCoconut(respawnTimeInSeconds));
+    var coconuts = FindObjectsOfType<CoconutScript>();
+    if (coconuts.Length <= 1)
+    {
+      // Regenerate a fresh new coconut in few seconds
+      StartCoroutine(RespawnCoconut(respawnTimeInSeconds));
+    }
   }
 
   IEnumerator RespawnCoconut(float cooldown)
@@ -243,6 +278,59 @@ public class GameScript : MonoBehaviour
     combo++;
   }
 
+  // Slow motion
+
+  public void HandleSlowMotion()
+  {
+    // SLOW MOTION
+    if (Input.GetKey(KeyCode.Space) && slowmotionRemainingTime > 0)
+    {
+      if (isSlowmotion || (slowmotionRemainingTime > (slowmotionTotalTimeInSeconds / 8f)))
+      {
+        isSlowmotion = true;
+
+        // delta time is affected by slow motion so it can't be used for a cooldown here
+        ApplySlowMotion();
+      }
+      else
+      {
+        isSlowmotion = false;
+      }
+    }
+    else
+    {
+      isSlowmotion = false;
+    }
+
+    if (isSlowmotion == false)
+    {
+      // Regen slow motion
+      DisableSlowMotion();
+    }
+
+    slowmotionRemainingTime = Mathf.Clamp(slowmotionRemainingTime, 0f, slowmotionTotalTimeInSeconds);
+    gui.UpdateSlowmotion(slowmotionRemainingTime / slowmotionTotalTimeInSeconds);
+  }
+
+  public void ApplySlowMotion()
+  {
+    Time.timeScale = 0.15f;
+    Time.fixedDeltaTime = 0.02f * Time.timeScale; // Smooth physics
+
+    slowmotionRemainingTime -= (Time.realtimeSinceStartup - previousRealtimeDelta);
+  }
+
+  public void DisableSlowMotion()
+  {
+    Time.timeScale = 1f;
+    slowmotionRemainingTime += Time.deltaTime;
+  }
+
+  internal void AddSlowmotionBonus(float amount)
+  {
+    slowmotionRemainingTime += amount;
+  }
+
   /// <summary>
   /// Current combo count
   /// </summary>
@@ -251,6 +339,14 @@ public class GameScript : MonoBehaviour
     get
     {
       return combo;
+    }
+  }
+
+  public float SlowMotion
+  {
+    get
+    {
+      return slowmotionRemainingTime;
     }
   }
 
