@@ -1151,6 +1151,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 909168253}
   - 114: {fileID: 909168252}
+  - 82: {fileID: 909168254}
   m_Layer: 0
   m_Name: Sounds
   m_TagString: Untagged
@@ -1172,8 +1173,6 @@ MonoBehaviour:
   sounds:
   - key: Bonus
     sound: {fileID: 8300000, guid: bc235381f01b332469e28def629ae9eb, type: 3}
-  - key: Control
-    sound: {fileID: 8300000, guid: 9eabc2eba9ea74c4ca663659eb754ff6, type: 3}
   - key: Ground
     sound: {fileID: 8300000, guid: 3e9dc6d5a539afe4a99de0a78c276cab, type: 3}
   - key: Kill
@@ -1189,6 +1188,64 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
+--- !u!82 &909168254
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 909168251}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_audioClip: {fileID: 8300000, guid: 1d44710373891a74eb47701c55288ca4, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!1 &914459189
 GameObject:
   m_ObjectHideFlags: 0
@@ -1460,8 +1517,8 @@ MonoBehaviour:
   minSpawnCooldownInSeconds: .449999988
   maxSpawnCooldownInSeconds: 1.25
   bonusPrefab: {fileID: 11400000, guid: 5abdbe4725939754ba9b719226598d9e, type: 2}
-  minBonusSpawnFrequency: 5
-  maxBonusSpawnFrequency: 10
+  minBonusSpawnFrequency: 3
+  maxBonusSpawnFrequency: 7
 --- !u!4 &1070115101
 Transform:
   m_ObjectHideFlags: 0

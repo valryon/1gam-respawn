@@ -4,9 +4,9 @@ using System.Linq;
 
 public enum BonusType
 {
-  Clone,
+  Clone
   //Fly,
-  Slowmotion
+  //Slowmotion
 }
 
 public class BonusScript : MonoBehaviour
@@ -60,9 +60,9 @@ public class BonusScript : MonoBehaviour
         break;
       //case BonusType.Fly:
       //  break;
-      case BonusType.Slowmotion:
-        game.AddSlowmotionBonus(game.slowmotionTotalTimeInSeconds);
-        break;
+      //case BonusType.Slowmotion:
+      //  game.AddSlowmotionBonus(game.slowmotionTotalTimeInSeconds);
+      //  break;
       default:
         break;
     }
