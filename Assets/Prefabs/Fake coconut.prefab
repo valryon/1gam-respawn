@@ -41,7 +41,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.05162048, y: -.716801345, z: 0}
+  m_LocalPosition: {x: 10.2217093, y: -.214488804, z: 0}
   m_LocalScale: {x: .79088527, y: .621385515, z: 1}
   m_Children:
   - {fileID: 400002}
@@ -93,7 +93,7 @@ TextMesh:
   m_Alignment: 1
   m_TabSize: 1
   m_FontSize: 84
-  m_FontStyle: 0
+  m_FontStyle: 1
   m_RichText: 0
   m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
   m_Color:
@@ -132,7 +132,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_SortingLayerID: 0
   m_Sprite: {fileID: 21300010, guid: 1f85e0ad2d1d04954bb3e84e6c993c6f, type: 3}
-  m_Color: {r: .0346720815, g: 1, b: .90329814, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

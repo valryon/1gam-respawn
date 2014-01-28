@@ -198,8 +198,8 @@ public class GameScript : MonoBehaviour
     else
     {
       // Display score, whatever
-      // DEBUG: RELOAD
-      Application.LoadLevel("Game");
+      // TODO
+      Application.LoadLevel("Menu");
     }
 
     // slow motion independant time
