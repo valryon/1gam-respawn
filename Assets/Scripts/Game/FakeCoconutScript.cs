@@ -11,63 +11,79 @@ public enum MessageType
   Power
 }
 
-public class FakeCoconutScript : MonoBehaviour {
+public class FakeCoconutScript : MonoBehaviour
+{
 
-  private TextMesh text;
+  private TextMesh textMesh;
 
   private static Dictionary<MessageType, string[]> messages = new Dictionary<MessageType, string[]>() {
     { MessageType.Bonus, new string[]{
         "Yeepee,a super bonus!",
         "What did you just take?",
-        "Double coconut!"
+        "Double coconut!",
+        "Bonus!!!!",
+        "Look at that!"
+
       }},
     { MessageType.Fail, new string[]{
         "Haha, fail!",
         "Loser!",
-        "What a shame"
+        "What a shame",
+        "OMG",
+        "WTF",
+        "Sucker!"
       }},
     { MessageType.Kill, new string[]{
-        "Bang!",
-        "Nice!",
-        "Take that!"
+        "Bang",
+        "Nice",
+        "Take that",
+        "You rocks",
+        "<3"
       }},
     { MessageType.Power, new string[]{
         "Nice combo!",
         "Wow, coooooombo",
-        "Growing combo!"
+        "Growing combo!",
+        "Marry me!"
       }},
     { MessageType.Start, new string[]{
         "SPACEBAR to start!",
-        "Hit SPACEBAR to start killing!",
         "SPACEBAR is magic!"
       }}
 
   };
 
-	void Start () 
+  void Start()
   {
-    text = GetComponentInChildren<TextMesh>();
-    text.color = GetComponent<SpriteRenderer>().color;
-    text.renderer.enabled = false;
+    textMesh = GetComponentInChildren<TextMesh>();
+    textMesh.color = GetComponent<SpriteRenderer>().color;
 
     IsBusy = false;
-	}
+    this.textMesh.text = "";
+  }
 
-  public void Message(MessageType messageType) {
+  public void Message(MessageType messageType)
+  {
     IsBusy = true;
-    text.renderer.enabled = true;
 
     var messagesForType = messages[messageType];
     string m = messagesForType[Random.Range(0, messagesForType.Length)];
-    text.text = m;
 
-    StartCoroutine(Timeout(((m.Length/10)+1) * 2f));
+    if (this.textMesh == null)
+    {
+      textMesh = GetComponentInChildren<TextMesh>();
+    }
+
+    this.textMesh.text = m;
+
+    StartCoroutine(Timeout(((m.Length / 10) + 1) * 2f));
   }
 
-  IEnumerator Timeout(float duration) {
+  IEnumerator Timeout(float duration)
+  {
     yield return new WaitForSeconds(duration);
 
-    text.renderer.enabled = false;
+    this.textMesh.text = "";
     IsBusy = false;
 
     yield return null;
@@ -75,6 +91,7 @@ public class FakeCoconutScript : MonoBehaviour {
 
   public bool IsBusy
   {
-    get; private set;
+    get;
+    private set;
   }
 }

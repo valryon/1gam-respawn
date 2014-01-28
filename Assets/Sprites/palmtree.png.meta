@@ -44,11 +44,47 @@ TextureImporter:
     - name: palmtree_0
       rect:
         serializedVersion: 2
-        x: 15
-        y: 2
-        width: 148
-        height: 351
+        x: 4
+        y: 302
+        width: 168
+        height: 206
       alignment: 9
-      pivot: {x: .338717997, y: .0822554454}
+      pivot: {x: .757860661, y: .170671776}
+    - name: palmtree_1
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 423
+        width: 120
+        height: 83
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: palmtree_2
+      rect:
+        serializedVersion: 2
+        x: 386
+        y: 385
+        width: 87
+        height: 119
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: palmtree_3
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 348
+        width: 113
+        height: 69
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: palmtree_4
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 191
+        width: 164
+        height: 137
+      alignment: 0
+      pivot: {x: .5, y: .5}
   spritePackingTag: 
   userData: 
