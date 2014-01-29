@@ -1,16 +1,5 @@
-TODO
+Idées :
 
-- Coconuts amies avec visage
-- Coconut moins ralentie en slowmotion
-- Police 
-- les assets sont bien pixellisŽs aussi
-- une bulle autour des conneries que racontent les noix
-- et un visage ˆ la con quand elles le disent genre des Žnormes yeux
-- les bonus => un coffre volant avec des particules
-- Travailler textes
-
-- Coffres -> lŽvitation
-- coffres -> sprite
-- Afficher score sur kill
-
-- JUICE
+- ce qui serait pas mal, c'est que les vies soient les noix dans les autres arbres qui remplacent la perdante (Moger)
+- coffre volant
+- score sur kill
