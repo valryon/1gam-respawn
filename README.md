@@ -1,14 +1,31 @@
-One game a month - January 2014
-====================
+# THE KILLING COCONUT
 
-**Theme: Respawn**
+A game made by [Damien Mayance (Valryon)](http://dmayance.com)
 
-## The idea
+## One game a month - January 2014
 
-"Metroid-vania" game where each death make the player stronger, bigger, faster, etc.
+This game was an entry of the [One Game A Month](onegameamonth.com) challenge, january 2014. The theme was: **Respawn**
 
-Game starts facing a huge enemy, spawning dozen of projectiles killing in one shot. Player is nearly forced to die.
-But he respawns instantly, granted with new bonuses.
+## Gameplay
 
-After a while the player is able to defeat the first enemy and discover a whole new level. Unlike Spore, it was just a tiny piece of a much bigger world.
+````
+"Falling Coconuts Kill More People Than Shark Attacks"
+George Burgess
+````
+
+An evil coconut has decided to eradicate humans from the earth by killing them one by one.
+
+You have 60 sec to kill as many things as possible!
+
+## Controls
+
+* SPACEBAR to fall
+* SPACEBAR to use slow-motion
+* ARROWS to move the coconut!
+
+
+# TODO
+
+
+
 
