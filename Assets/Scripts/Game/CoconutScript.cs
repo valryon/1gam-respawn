@@ -196,6 +196,7 @@ public class CoconutScript : MonoBehaviour
     animator.SetTrigger("ground");
 
     // PARTICLES
+    SpecialEffects.Instance.ShakeCamera(0.25f, 0.25f);
     SpecialEffects.Instance.GroundEffect(transform.position);
     Soundbank.Instance.PlaySound("ground", transform.position);
 
