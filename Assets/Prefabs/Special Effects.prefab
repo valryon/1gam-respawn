@@ -40,6 +40,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   killEffect: {fileID: 19800000, guid: 04452f5987a43f14aa5a1841eace9442, type: 2}
   groundEffect: {fileID: 19800000, guid: 08b12d2804fa2e14bb5107aa3a436c61, type: 2}
+  juiceExplosionEffect: {fileID: 19800000, guid: 0f526611c4575ae40b56cc4ebc7105b3,
+    type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

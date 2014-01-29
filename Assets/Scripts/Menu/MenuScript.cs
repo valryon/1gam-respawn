@@ -23,7 +23,7 @@ public class MenuScript : MonoBehaviour
       for (int i = 0; i < Random.Range(0, 4); i++)
       {
         Vector3 position = Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(0f, 1f), Random.Range(0f, 1f), 0));
-        SpecialEffects.Instance.KillEffect(position);
+        SpecialEffects.Instance.JuiceExplosion(position);
       }
     }
   }
@@ -33,7 +33,7 @@ public class MenuScript : MonoBehaviour
     if (Input.GetMouseButton(0))
     {
       Vector3 position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-      SpecialEffects.Instance.KillEffect(position);
+      SpecialEffects.Instance.JuiceExplosion(position);
 
       RaycastHit2D hit = Physics2D.Raycast(position, Vector2.zero);
       if (hit.collider != null && hit.collider.gameObject.name.ToLower().Contains("coconut")) // Haha, so ugly

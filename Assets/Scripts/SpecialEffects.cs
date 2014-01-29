@@ -10,6 +10,7 @@ public class SpecialEffects : MonoBehaviour
 
   public ParticleSystem killEffect;
   public ParticleSystem groundEffect;
+  public ParticleSystem juiceExplosionEffect;
 
   private Vector3 originPosition;
   private float shakeDecay;
@@ -33,6 +34,13 @@ public class SpecialEffects : MonoBehaviour
     }
   }
 
+  public void JuiceExplosion(Vector3 position)
+  {
+    ParticleSystem ps = Instantiate(juiceExplosionEffect) as ParticleSystem;
+    ps.transform.position = position;
+    ps.transform.parent = specialEffectParent;
+    Destroy(ps.gameObject, ps.duration);
+  }
 
   public void KillEffect(Vector3 position)
   {
