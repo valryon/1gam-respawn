@@ -34,6 +34,11 @@ public class SpecialEffects : MonoBehaviour
     }
   }
 
+  void Destroy()
+  {
+    Instance = null;
+  }
+
   public void JuiceExplosion(Vector3 position)
   {
     ParticleSystem ps = Instantiate(juiceExplosionEffect) as ParticleSystem;

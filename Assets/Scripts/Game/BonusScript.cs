@@ -35,6 +35,7 @@ public class BonusScript : MonoBehaviour
   {
     // Sound
     Soundbank.Instance.PlaySound("bonus", transform.position);
+    SpecialEffects.Instance.JuiceExplosion(transform.position);
 
     // Auto destruction
     collider2D.enabled = false;

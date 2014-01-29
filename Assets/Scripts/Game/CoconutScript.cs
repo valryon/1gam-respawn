@@ -71,19 +71,19 @@ public class CoconutScript : MonoBehaviour
       // ARROWS to move slightly
       if (Input.GetKey(KeyCode.LeftArrow))
       {
-        force = new Vector2(-1 * controlForce.x, controlForce.y / 10f);
+        force += new Vector2(-1 * controlForce.x, controlForce.y / 10f);
       }
       if (Input.GetKey(KeyCode.RightArrow))
       {
-        force = new Vector2(controlForce.x, (controlForce.y / 10f));
+        force += new Vector2(controlForce.x, (controlForce.y / 10f));
       }
       if (Input.GetKey(KeyCode.UpArrow))
       {
-        force = new Vector2(0, controlForce.y / 2f);
+        force += new Vector2(0, controlForce.y / 2f);
       }
       if (Input.GetKey(KeyCode.DownArrow))
       {
-        force = new Vector2(0, -controlForce.y);
+        force += new Vector2(0, -controlForce.y);
       }
 
       if (force != Vector2.zero)
