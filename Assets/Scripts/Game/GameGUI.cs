@@ -43,8 +43,8 @@ public class GameGUI : MonoBehaviour
   {
     if (isVisible)
     {
-      GUI.color = Color.green;
-      GUI.HorizontalScrollbar(new Rect(6, 34, 200, 20), 1, slowmoPurcent * 100, 10, 110);
+      GUI.color = Color.blue;
+      GUI.HorizontalScrollbar(new Rect(4, 38, 148, 20), 1, slowmoPurcent * 100, 10, 110);
     }
   }
 

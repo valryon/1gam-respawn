@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 41dafb1e513cbdf42b237c268dcb0052
+guid: a00c3e189cb3f7342aad73acec92ae01
 TextureImporter:
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 0
+    enableMipMap: 1
     linearTexture: 0
     correctGamma: 0
     fadeOut: 0
@@ -27,32 +27,32 @@ TextureImporter:
     aniso: 1
     mipBias: -1
     wrapMode: 1
-  nPOTScale: 0
+  nPOTScale: 1
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 0
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: .5, y: .5}
   spritePixelsToUnits: 100
   alphaIsTransparency: 1
-  textureType: 8
+  textureType: 0
   buildTargetSettings:
   - buildTarget: iPhone
     maxTextureSize: 1024
-    textureFormat: -1
+    textureFormat: -2
     compressionQuality: 50
   spriteSheet:
     sprites:
-    - name: hint_0
+    - name: gui_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 128
-        height: 128
-      alignment: 9
-      pivot: {x: .796934903, y: .132822424}
+        x: 6
+        y: 200
+        width: 43
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
   spritePackingTag: 
   userData: 

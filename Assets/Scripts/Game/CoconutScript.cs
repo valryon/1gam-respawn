@@ -66,33 +66,40 @@ public class CoconutScript : MonoBehaviour
     }
     else
     {
-      bool isMoving = false;
+      Vector2 force = Vector2.zero;
 
       // ARROWS to move slightly
       if (Input.GetKey(KeyCode.LeftArrow))
       {
-        isMoving = true;
-        rigidbody2D.AddForce(new Vector2(-1 * controlForce.x, controlForce.y / 10f));
+        force = new Vector2(-1 * controlForce.x, controlForce.y / 10f);
       }
       if (Input.GetKey(KeyCode.RightArrow))
       {
-        isMoving = true;
-        rigidbody2D.AddForce(new Vector2(controlForce.x, (controlForce.y / 10f)));
+        force = new Vector2(controlForce.x, (controlForce.y / 10f));
       }
       if (Input.GetKey(KeyCode.UpArrow))
       {
-        isMoving = true;
-        rigidbody2D.AddForce(new Vector2(0, controlForce.y / 2f));
+        force = new Vector2(0, controlForce.y / 2f);
       }
       if (Input.GetKey(KeyCode.DownArrow))
       {
-        isMoving = true;
-        rigidbody2D.AddForce(new Vector2(0, -controlForce.y));
+        force = new Vector2(0, -controlForce.y);
       }
 
-      if (isMoving)
+      if (force != Vector2.zero)
       {
+        rigidbody2D.AddForce(force);
+
         //Soundbank.Instance.PlaySound("control", transform.position);
+      }
+
+      if (gameScript.IsSlowMotion)
+      {
+        rigidbody2D.gravityScale = 0.25f;
+      }
+      else
+      {
+        rigidbody2D.gravityScale = 1f;
       }
     }
   }

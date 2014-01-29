@@ -404,4 +404,11 @@ public class GameScript : MonoBehaviour
     }
   }
 
+  public bool IsSlowMotion
+  {
+    get
+    {
+      return isSlowmotion;
+    }
+  }
 }

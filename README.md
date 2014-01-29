@@ -1,6 +1,11 @@
 # THE KILLING COCONUT
 
+## Credits
+
 A game made by [Damien Mayance (Valryon)](http://dmayance.com)
+
+* Graphics ripped from [George](http://pixelnest.io/work/george)
+* Music by Isak Martinsson
 
 ## One game a month - January 2014
 
@@ -22,6 +27,9 @@ You have 60 sec to kill as many things as possible!
 * SPACEBAR to fall
 * SPACEBAR to use slow-motion
 * ARROWS to move the coconut!
+
+
+
 
 
 # TODO

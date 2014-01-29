@@ -15,6 +15,7 @@ public class FakeCoconutScript : MonoBehaviour
 {
 
   private TextMesh textMesh;
+  private Animator animator;
 
   private static Dictionary<MessageType, string[]> messages = new Dictionary<MessageType, string[]>() {
     { MessageType.Bonus, new string[]{
@@ -55,25 +56,22 @@ public class FakeCoconutScript : MonoBehaviour
 
   void Start()
   {
-    textMesh = GetComponentInChildren<TextMesh>();
-    textMesh.color = GetComponent<SpriteRenderer>().color;
+    GetComponentIfNotStarted();
 
     IsBusy = false;
     this.textMesh.text = "";
+    animator.SetBool("talk", false);
   }
 
   public void Message(MessageType messageType)
   {
+    GetComponentIfNotStarted();
+
     IsBusy = true;
+    animator.SetBool("talk", true);
 
     var messagesForType = messages[messageType];
     string m = messagesForType[Random.Range(0, messagesForType.Length)];
-
-    if (this.textMesh == null)
-    {
-      textMesh = GetComponentInChildren<TextMesh>();
-    }
-
     this.textMesh.text = m;
 
     StartCoroutine(Timeout(((m.Length / 10) + 1) * 2f));
@@ -85,8 +83,21 @@ public class FakeCoconutScript : MonoBehaviour
 
     this.textMesh.text = "";
     IsBusy = false;
+    animator.SetBool("talk", false);
 
     yield return null;
+  }
+
+  private void GetComponentIfNotStarted()
+  {
+    if (this.textMesh == null)
+    {
+      textMesh = GetComponentInChildren<TextMesh>();
+    }
+    if (this.animator == null)
+    {
+      this.animator = GetComponent<Animator>();
+    }
   }
 
   public bool IsBusy
