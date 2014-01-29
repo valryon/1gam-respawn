@@ -106,6 +106,7 @@ public class GameScript : MonoBehaviour
   private float previousRealtimeDelta;
 
   private GameGUI gui;
+  private AudioSource music;
 
   private List<FakeCoconutScript> fakeCoconuts;
 
@@ -121,6 +122,8 @@ public class GameScript : MonoBehaviour
 
     gui = FindObjectOfType<GameGUI>();
     if (gui == null) Debug.LogError("Missing GUI!");
+
+    music = FindObjectOfType<AudioSource>();
 
     // Initialize
     enemySpawnCooldown = Random.Range(minSpawnCooldownInSeconds, maxSpawnCooldownInSeconds);
@@ -293,6 +296,8 @@ public class GameScript : MonoBehaviour
   public void HandleSlowMotion()
   {
     // SLOW MOTION
+    bool previousSlowMotion = isSlowmotion;
+
     if (Input.GetKey(KeyCode.Space) && slowmotionRemainingTime > 0)
     {
       if (isSlowmotion || (slowmotionRemainingTime > (slowmotionTotalTimeInSeconds / 8f)))
@@ -318,6 +323,19 @@ public class GameScript : MonoBehaviour
       DisableSlowMotion();
     }
 
+    if (isSlowmotion != previousSlowMotion)
+    {
+      // Sound
+      if (isSlowmotion)
+      {
+        Soundbank.Instance.PlaySound("SlowmotionEnter", transform.position);
+      }
+      else
+      {
+        Soundbank.Instance.PlaySound("SlowmotionExit", transform.position);
+      }
+    }
+
     slowmotionRemainingTime = Mathf.Clamp(slowmotionRemainingTime, 0f, slowmotionTotalTimeInSeconds);
     gui.UpdateSlowmotion(slowmotionRemainingTime / slowmotionTotalTimeInSeconds);
   }
@@ -328,12 +346,19 @@ public class GameScript : MonoBehaviour
     Time.fixedDeltaTime = 0.02f * Time.timeScale; // Smooth physics
 
     slowmotionRemainingTime -= (Time.realtimeSinceStartup - previousRealtimeDelta);
+
+    // Slow music
+    music.pitch -= 0.05f;
+    music.pitch = Mathf.Clamp(music.pitch, 0.75f, 1f);
   }
 
   public void DisableSlowMotion()
   {
     Time.timeScale = 1f;
     slowmotionRemainingTime += Time.deltaTime;
+
+    music.pitch += 0.05f;
+    music.pitch = Mathf.Clamp(music.pitch, 0.75f, 1f);
   }
 
   internal void AddSlowmotionBonus(float amount)
@@ -341,11 +366,13 @@ public class GameScript : MonoBehaviour
     slowmotionRemainingTime += amount;
   }
 
-  public void DisplayMessage(MessageType mType) {
+  public void DisplayMessage(MessageType mType)
+  {
     // Find a random free coconut
-    var fakeCoconut = fakeCoconuts.OrderBy(f => Random.Range(0f,1f)).Where(f => f.IsBusy == false).FirstOrDefault();
+    var fakeCoconut = fakeCoconuts.OrderBy(f => Random.Range(0f, 1f)).Where(f => f.IsBusy == false).FirstOrDefault();
 
-    if(fakeCoconut != null) {
+    if (fakeCoconut != null)
+    {
       fakeCoconut.Message(mType);
     }
   }
