@@ -36,7 +36,7 @@ public class MenuScript : MonoBehaviour
       SpecialEffects.Instance.KillEffect(position);
 
       RaycastHit2D hit = Physics2D.Raycast(position, Vector2.zero);
-      if (hit.collider != null)
+      if (hit.collider != null && hit.collider.gameObject.name.ToLower().Contains("coconut")) // Haha, so ugly
       {
         if (gameLoading == false)
           StartCoroutine(LoadGame());
