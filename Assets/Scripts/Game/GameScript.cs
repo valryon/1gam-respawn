@@ -18,11 +18,6 @@ public class GameScript : MonoBehaviour
   public float time = 60f;
 
   /// <summary>
-  /// Given time between two combos
-  /// </summary>
-  public float comboBaseCooldown = 5f;
-
-  /// <summary>
   /// Points per kill
   /// </summary>
   public int points = 100;
@@ -99,7 +94,7 @@ public class GameScript : MonoBehaviour
   private int score;
   private int combo;
   private Transform randomGuysParent, bonusParent, coconutsParent;
-  private float enemySpawnCooldown, comboCooldown, bonusCooldown;
+  private float enemySpawnCooldown, bonusCooldown;
 
   private bool isSlowmotion;
   private float slowmotionRemainingTime;
@@ -172,14 +167,6 @@ public class GameScript : MonoBehaviour
         SpawnBonus();
       }
 
-      // Reset combo is cooldown drops to 0
-      if (comboCooldown > 0)
-      {
-        comboCooldown -= Time.deltaTime;
-        if (comboCooldown <= 0f)
-          combo = 1;
-      }
-
       timeleft -= Time.deltaTime;
 
       // GUI
@@ -218,6 +205,9 @@ public class GameScript : MonoBehaviour
     if (coconuts.Length <= 1)
     {
       DisplayMessage(MessageType.Fail);
+
+      // Reset combo
+      combo = 1;
 
       // Regenerate a fresh new coconut in few seconds
       StartCoroutine(RespawnCoconut(respawnTimeInSeconds));
@@ -284,7 +274,6 @@ public class GameScript : MonoBehaviour
     score += (points * combo);
 
     // Combo
-    comboCooldown = comboBaseCooldown;
     combo++;
 
     // Joke

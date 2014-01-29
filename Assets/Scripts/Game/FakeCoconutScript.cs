@@ -19,18 +19,20 @@ public class FakeCoconutScript : MonoBehaviour
 
   private static Dictionary<MessageType, string[]> messages = new Dictionary<MessageType, string[]>() {
     { MessageType.Bonus, new string[]{
-        "Yeepee,a super bonus!",
-        "What did you just take?",
-        "Double coconut!",
-        "Bonus!!!!",
-        "Look at that!"
-
+        "Hu?!",
+        "What?!",
+        "Bonus time!",
+        "Enjoy!",
       }},
     { MessageType.Fail, new string[]{
-        "Haha, fail!",
-        "Loser!",
+        "Fail",
+        "Ha ha",
+        "Loser",
         "What a shame",
         "OMG",
+        "Arg",
+        "LOL",
+        "xD",
         "WTF",
         "Sucker!"
       }},
@@ -39,17 +41,19 @@ public class FakeCoconutScript : MonoBehaviour
         "Nice",
         "Take that",
         "You rocks",
-        "<3"
+        "<3",
+        "Wow"
       }},
     { MessageType.Power, new string[]{
-        "Nice combo!",
-        "Wow, coooooombo",
-        "Growing combo!",
-        "Marry me!"
+        "My hero!",
+        "My coconut!",
+        "Marry me!",
+        "Dat combo!"
       }},
     { MessageType.Start, new string[]{
-        "SPACEBAR to start!",
-        "SPACEBAR is magic!"
+        "Press SPACEBAR!",
+        "Smash SPACEBAR!",
+        "Hit SPACEBAR!"
       }}
 
   };

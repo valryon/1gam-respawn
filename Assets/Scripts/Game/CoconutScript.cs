@@ -229,7 +229,7 @@ public class CoconutScript : MonoBehaviour
       trail.endWidth = powerLevel * 0.04f;
       trail.startWidth = powerLevel * 0.04f;
 
-      if (powerLevel > 1) 
+      if (powerLevel > 2) 
       {
         gameScript.DisplayMessage(MessageType.Power);
       }
