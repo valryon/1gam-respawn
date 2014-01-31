@@ -9,7 +9,7 @@ A game made by [Damien Mayance (Valryon)](http://dmayance.com)
 
 ## One game a month - January 2014
 
-This game was an entry of the [One Game A Month](onegameamonth.com) challenge, january 2014. The theme was: **Respawn**
+This game was an entry of the [One Game A Month](http://onegameamonth.com) challenge, january 2014. The theme was: **Respawn**
 
 ## Gameplay
 
@@ -28,11 +28,6 @@ You have 60 sec to kill as many things as possible!
 * SPACEBAR to use slow-motion
 * ARROWS to move the coconut!
 
-
-
-
-
-# TODO
 
 
 
