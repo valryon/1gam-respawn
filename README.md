@@ -1,5 +1,7 @@
 # THE KILLING COCONUT
 
+[Play to the web version](http://dmayance.com/work/1gam-respawn/TheKillingCoconut.html)
+
 ## Credits
 
 A game made by [Damien Mayance (Valryon)](http://dmayance.com)
